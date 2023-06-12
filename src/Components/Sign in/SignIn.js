@@ -1,8 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../Assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+
+    const [ email, setEmail ] = useState();
+    const [ password, setPassword ] = useState();
+    const [ error, setError ] = useState();
+
+    const navigate = useNavigate();
+
+    const handleInputChangeEmail = (e) => {
+       setEmail(e.target.value);
+    };
+
+    const handleInputChangePassword = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const handleSignin = async (e) => {
+        e.preventDefault();
+
+        const userData = {
+            email: email,
+            password: password
+        };
+
+        try{
+            //
+            const response = await fetch("http://localhost:3000/signIn", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userData)
+            });
+
+            if(response.ok){
+                // extract  the token from the response
+
+                const data = await response.json();
+                const token = data.token;
+                // success user sugned up successfully
+                navigate("/feed");
+                console.log("User Signed up successfully");
+            } else {
+                console.error("Sign up failed");
+                setError("Wrong Email or password")
+            }
+
+        } catch(error){
+            console.error("Error", error)
+        }
+    };
+
+
     return (
         <section className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-8">
@@ -13,7 +65,7 @@ const SignIn = () => {
                             Login to your account
                             </h2>
                     </div>
-                    <form className="mt-8 space-y-6">
+                    <form className="mt-8 space-y-6" onSubmit={handleSignin}>
                         <div>
                             <div>
                                 <label htmlFor="email-address" className="sr-only">
@@ -26,6 +78,7 @@ const SignIn = () => {
                                 autoComplete="email"
                                 placeholder="Email Address"
                                 required
+                                onChange={handleInputChangeEmail}
                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                             </div>
                             <div>
@@ -38,13 +91,14 @@ const SignIn = () => {
                                 type="password"
                                 placeholder="password"
                                 required
+                                onChange={handleInputChangePassword}
                                 className="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                                  />
                             </div>
                         </div>
                         <div>
                             <div>
-                                <p>Error message</p>
+                                <p>{error}</p>
                             </div>
                             <div>
                                 <button type="submit"

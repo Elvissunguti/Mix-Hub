@@ -1,8 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../Assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
+
+    const [ userName, setUserName ] = useState();
+    const [ email, setEmail ] = useState();
+    const [ password, setPassword] = useState();
+    
+    const navigate = useNavigate();
+
+    const handleInputChangeUserName = (e) => {
+        setUserName(e.target.value);
+    };
+
+    const handleInputChangeEmail = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handleInputChangePassword = (e) => {
+        setPassword(e.target.value);
+    };
+
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+
+        try {
+
+            const response = await axios.post("http://localhost:3000/register", {userName, email, password});
+            console.log(response.data);
+
+            if(!response){
+                // handle register error
+                const errorData = await response.json();
+                console.log(errorData.message);
+            } else {
+                navigate("/")
+                console.log("Registered Successfully");
+            }
+        } catch(error){
+            console.error("Error:", error);
+        }
+    };
+
+
     return (
         <section className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
             <div className="w-full max-w-md space-y-18">
@@ -13,7 +56,7 @@ const Register = () => {
                             Create an Account
                         </h2>
                     </div>
-                    <form className="mt-8 space-y-6">
+                    <form className="mt-8 space-y-6" onSubmit={handleRegister}>
                         <div className="-space-y-px rounded-md shadow-sm">
                             <div>
                                 <label htmlFor="username" className="sr-only">
@@ -26,6 +69,7 @@ const Register = () => {
                                 autoComplete="name"
                                 placeholder="Username"
                                 required
+                                onChange={handleInputChangeUserName}
                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                             </div>
                             <div>
@@ -39,6 +83,7 @@ const Register = () => {
                                 autoComplete=""
                                 placeholder="Email Address"
                                 required
+                                onChange={handleInputChangeEmail}
                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                             </div>
                             <div>
@@ -51,6 +96,7 @@ const Register = () => {
                                 name="email"
                                 placeholder="Password"
                                 required
+                                onChange={handleInputChangePassword}
                                 className="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" />
                             </div>
                         </div>
