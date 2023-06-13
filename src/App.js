@@ -6,6 +6,7 @@ import SignIn from './Components/Sign in/SignIn';
 import Register from './Components/Register/Register';
 import Feed from './Components/Feed/Feed';
 import Library from './Components/Library/Library';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
@@ -17,10 +18,13 @@ function App() {
         <Route path='/Register' element={<Register />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='/library' element={<Library />} />
+        <Route path='/footer' element={<Footer />} />
         
 
       </Routes>
       </BrowserRouter>
+
+    
       
     </div>
   );

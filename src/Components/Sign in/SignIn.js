@@ -1,23 +1,19 @@
 import React, { useState } from "react";
 import logo from "../Assets/logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import localStorage from "local-storage";
 
 const SignIn = () => {
 
-    const [ email, setEmail ] = useState();
-    const [ password, setPassword ] = useState();
-    const [ error, setError ] = useState();
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword ] = useState('');
+    const [ error, setError ] = useState("");
 
     const navigate = useNavigate();
 
-    const handleInputChangeEmail = (e) => {
-       setEmail(e.target.value);
-    };
+ 
 
-    const handleInputChangePassword = (e) => {
-        setPassword(e.target.value);
-    };
-
+    // api call for sign in 
     const handleSignin = async (e) => {
         e.preventDefault();
 
@@ -26,33 +22,43 @@ const SignIn = () => {
             password: password
         };
 
-        try{
+        try {
             //
-            const response = await fetch("http://localhost:3000/signIn", {
-                method: "POST",
+            const response = await fetch("http://localhost:3000/login", {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(userData)
             });
 
-            if(response.ok){
+            if (response.ok){
                 // extract  the token from the response
 
-                const data = await response.json();
-                const token = data.token;
-                // success user sugned up successfully
+
+                
+                // User signed up successfully
                 navigate("/feed");
                 console.log("User Signed up successfully");
             } else {
                 console.error("Sign up failed");
-                setError("Wrong Email or password")
+                setError("Wrong Email or password");
             }
 
-        } catch(error){
-            console.error("Error", error)
+        } catch (error){
+            // handle any network or server error
+            console.error("Error:", error)
         }
     };
+
+
+    const handleInputChangeEmail = (e) => {
+        setEmail(e.target.value);
+     };
+ 
+     const handleInputChangePassword = (e) => {
+         setPassword(e.target.value);
+     };
 
 
     return (
@@ -68,13 +74,14 @@ const SignIn = () => {
                     <form className="mt-8 space-y-6" onSubmit={handleSignin}>
                         <div>
                             <div>
-                                <label htmlFor="email-address" className="sr-only">
+                                <label htmlFor="email" className="sr-only">
                                     Email Address
                                 </label>
                                 <input
-                                id="email-address"
+                                id="email"
                                 name="email"
                                 type="email"
+                                value={email}
                                 autoComplete="email"
                                 placeholder="Email Address"
                                 required
@@ -89,6 +96,7 @@ const SignIn = () => {
                                 id="password"
                                 name="password"
                                 type="password"
+                                value={password}
                                 placeholder="password"
                                 required
                                 onChange={handleInputChangePassword}
@@ -97,12 +105,12 @@ const SignIn = () => {
                             </div>
                         </div>
                         <div>
-                            <div>
+                            <div className='text-center text-red-500 md:text-lg'>
                                 <p>{error}</p>
                             </div>
                             <div>
-                                <button type="submit"
-                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-[#40AA54] py-2 px-4 text-sm font-medium text-white hover:bg-[#40AA54]-700 focus:outline-none focus:ring-2 focus:ring-[#40AA54]-500 focus:ring-offset-2">
+                                <button type="Submit"
+                                className="group relative flex w-full justify-center rounded-md border border-transparent bg-[#40AA54] py-2 px-4 text-lg font-medium text-white hover:bg-[#40AA54]-700 focus:outline-none focus:ring-2 focus:ring-[#40AA54]-500 focus:ring-offset-2">
                                     Sign in
                                 </button>
                                

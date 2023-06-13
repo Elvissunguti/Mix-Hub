@@ -5,9 +5,9 @@ import axios from "axios";
 
 const Register = () => {
 
-    const [ userName, setUserName ] = useState();
-    const [ email, setEmail ] = useState();
-    const [ password, setPassword] = useState();
+    const [ userName, setUserName ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ password, setPassword] = useState('');
     
     const navigate = useNavigate();
 
@@ -64,9 +64,9 @@ const Register = () => {
                                 </label>
                                 <input
                                  id="username"
-                                 name="email"
+                                 name="username"
                                 type="username"
-                                autoComplete="name"
+                                autoComplete="username"
                                 placeholder="Username"
                                 required
                                 onChange={handleInputChangeUserName}
@@ -80,7 +80,7 @@ const Register = () => {
                                 id="email"
                                 name="email"
                                 type="email"
-                                autoComplete=""
+                                autoComplete="email"
                                 placeholder="Email Address"
                                 required
                                 onChange={handleInputChangeEmail}
@@ -93,7 +93,7 @@ const Register = () => {
                                 <input
                                 id="password"
                                 type="password"
-                                name="email"
+                                name="password"
                                 placeholder="Password"
                                 required
                                 onChange={handleInputChangePassword}

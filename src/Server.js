@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 
 mongoose.connect(
@@ -78,24 +78,24 @@ app.post('/register', async (req, res) => {
 
 });
 
-app.post("/signIn", (req, res) => {
+app.post("/login", (request, response) => {
     // check if email exist
-    User.findOne({ email: req.body.email})
+    User.findOne({ email: request.body.email})
     
     //if email exist
     .then((user) => {
         // compare password entered and the hashedPassword
-        bcrypt.compare(req.body.password, user.password)
+        bcrypt.compare(request.body.password, user.password)
 
         // if password match
         .then((passwordCheck) => {
             // check if password match
             if(!passwordCheck){
-                return res.send({
+                return response.send({
                     message: "Password does not match",
                     error
                 });
-            };
+            }
 
             // create jwt token 
             const token = jwt.sign(
@@ -104,27 +104,27 @@ app.post("/signIn", (req, res) => {
                     userEmail: user.email,
                 },
                 "RANDOM-TOKEN",
-                {expiresIn: "24h"}
+                { expiresIn: "24h" }
             );
 
             // return success response
-            res.send({
+            response.send({
                 message: "Sign in successfull",
                 token,
             });
 
         })
         // catch error if password does not match
-        .catch((err) => {
-            res.send({
+        .catch((error) => {
+            response.send({
                 message: "Passwords does not match",
-                err,
+                error,
             });
         });
     })
     // catch error if email does not match
     .catch((e) => {
-        res.send({
+        response.send({
             message: "Email not found",
             e,
         });
