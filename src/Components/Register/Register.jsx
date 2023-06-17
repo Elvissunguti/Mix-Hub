@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import logo from "../Assets/logo.png";
+import spotify_logo_white from "../Assets/spotify_logo_white.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const Register = () => {
 
     const [ userName, setUserName ] = useState('');
     const [ email, setEmail ] = useState('');
     const [ password, setPassword] = useState('');
+    const [ cookie, setCookie ] = useCookies(["token"]);
     
     const navigate = useNavigate();
 
@@ -37,6 +39,10 @@ const Register = () => {
                 const errorData = await response.json();
                 console.log(errorData.message);
             } else {
+                const token = response.token;
+                const date = new Date();
+                date.setDate(date.getDate() + 30);
+                setCookie("token", token, {path: "/", expires:date})
                 navigate("/")
                 console.log("Registered Successfully");
             }
@@ -51,7 +57,7 @@ const Register = () => {
             <div className="w-full max-w-md space-y-18">
                 <div>
                     <div>
-                        <img src={logo} alt="logo img" className="mx-auto h-20 w-auto" />
+                        <img src={spotify_logo_white} alt="logo img" className="mx-auto h-20 w-auto" />
                         <h2 className="mt-6 text-center text-gray-900 text-3xl font-bold tracking-tight">
                             Create an Account
                         </h2>

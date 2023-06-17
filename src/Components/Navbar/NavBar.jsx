@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../Assets/logo.png";
+import spotify_logo_white from "../Assets/spotify_logo_white.svg";
 
 const NavBar = () => {
 
@@ -14,7 +14,7 @@ const NavBar = () => {
         <nav className="bg-[#808080]">
             <div className="mx-auto flex justify-center items-center max-w-4xl max-w-6xl">
                 <Link>
-                <img src={logo} alt="logo img" className="w-auto h-20 bg-[#808080]" />
+                <img src={spotify_logo_white} alt="logo img" className="w-auto h-20 bg-[#808080]" />
                 </Link>
                 <div className="flex flex-row items-center space-x-16">
                 <input type="search"  

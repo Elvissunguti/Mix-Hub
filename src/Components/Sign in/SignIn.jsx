@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import logo from "../Assets/logo.png";
+import spotify_logo_white from "../Assets/spotify_logo_white.svg"
 import { Link, useNavigate } from "react-router-dom";
 import localStorage from "local-storage";
+import { useCookies } from "react-cookie";
 
 const SignIn = () => {
 
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ error, setError ] = useState("");
+    const [ cookies, setCookies ] = useCookies(["token"]);
 
     const navigate = useNavigate();
 
@@ -34,9 +36,10 @@ const SignIn = () => {
 
             if (response.ok){
                 // extract  the token from the response
-
-
-                
+                const token = response.token;
+                const date = new Date();
+                date.setDate(date.getDate() + 30);
+                setCookies("token", token, {path:"/", expires: date })
                 // User signed up successfully
                 navigate("/feed");
                 console.log("User Signed up successfully");
@@ -66,7 +69,7 @@ const SignIn = () => {
             <div className="w-full max-w-md space-y-8">
                 <div>
                     <div>
-                        <img src={logo} alt="logo img" className="mx-auto h-20 w-auto" />
+                        <img src={spotify_logo_white} alt="logo img" className="mx-auto h-20 w-auto" />
                         <h2 className="mt-6 text-center text-3xl font-bold traking-tight text-gray-900">
                             Login to your account
                             </h2>
