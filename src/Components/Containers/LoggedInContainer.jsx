@@ -83,7 +83,7 @@ const LoggedInContainer = ({ children, curActiveScreen}) => {
                     </div>
                     <div className="py-6">
                         <IconText
-                        iconName={"material-symbols: home"}
+                        iconName={"material-symbols:home"}
                         displayText={"Home"}
                         targetLink={"/home"}
                         active={curActiveScreen === "home"}

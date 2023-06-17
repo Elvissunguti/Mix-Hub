@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const IconText = ({ iconName, active, displayText, targetLink }) => {
     return (
         <Link to={targetLink} className="block">
-        <div>
-            <div>
+        <div className="flex items-center justify-start cursor-pointer">
+            <div className="px-5 py-2">
                 <Icon
                 icon={iconName}
                 color={active ? "white" : "gray" }

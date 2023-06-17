@@ -10,6 +10,7 @@ import Library from './Components/Library/Library';
 import Footer from './Components/Footer/Footer';
 import { useCookies } from 'react-cookie';
 import songContext from './Components/Contexts/songContext';
+import Search from './Components/SearchPage/SearchPage';
 
 function App() {
 
@@ -37,6 +38,8 @@ function App() {
             <Route path='/' element={<HelloComponent />} />
             <Route path='/home' element={<LoggedInHomeComponent />} />
             <Route path="/" />
+
+            <Route path='/search' element={<Search />} />
 
             
           </Routes>
