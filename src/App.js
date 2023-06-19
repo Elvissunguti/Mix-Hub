@@ -11,6 +11,7 @@ import Footer from './Components/Footer/Footer';
 import { useCookies } from 'react-cookie';
 import songContext from './Components/Contexts/songContext';
 import Search from './Components/SearchPage/SearchPage';
+import MyMusic from './Components/MyMusic/MyMusic';
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/" />
 
             <Route path='/search' element={<Search />} />
+            <Route path='myMusic' element={<MyMusic />} />
 
             
           </Routes>
