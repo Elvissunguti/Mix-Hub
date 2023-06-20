@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const songRoutes = require("../Backend/routes/Song");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -130,6 +131,8 @@ app.post("/login", (request, response) => {
         });
     });
 });
+
+app.use("/song", songRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
