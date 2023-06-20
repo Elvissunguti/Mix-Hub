@@ -12,6 +12,7 @@ import { useCookies } from 'react-cookie';
 import songContext from './Components/Contexts/songContext';
 import Search from './Components/SearchPage/SearchPage';
 import MyMusic from './Components/MyMusic/MyMusic';
+import UploadSong from './Components/UploadSong/UploadSong';
 
 function App() {
 
@@ -41,9 +42,9 @@ function App() {
             <Route path="/" />
 
             <Route path='/search' element={<Search />} />
-            <Route path='myMusic' element={<MyMusic />} />
+            <Route path='/myMusic' element={<MyMusic />} />
+            <Route path='/uploadsong' element={<UploadSong />} />
 
-            
           </Routes>
 
         </songContext.Provider>
