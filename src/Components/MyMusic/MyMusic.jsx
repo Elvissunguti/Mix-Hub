@@ -18,7 +18,7 @@ const MyMusic = () => {
         const token = getToken();
       
         const getData = async () => {
-          const response = await fetch("http://localhost:3000/song/get/mysongs", {
+          const response = await fetch("http://localhost:3000/get/mysongs", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

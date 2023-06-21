@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const songRoutes = require("../Backend/routes/Song");
+const songRoutes = require("./routes/Song");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -60,7 +60,7 @@ app.post('/register', async (req, res) => {
         // CHECK IF USER EXISTS
         const existingUser = await User.findOne({ email });
         if(existingUser) {
-            return res.json({ message: "User already exists"});
+            return res.json({ message: "User with this email already exists"});
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 

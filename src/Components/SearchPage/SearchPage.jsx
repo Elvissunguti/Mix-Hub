@@ -21,7 +21,7 @@ const Search = () => {
         };
         const token = getToken();
       
-        const response = await fetch("http://localhost:3000/song/get/songname/" + searchText, {
+        const response = await fetch("http://localhost:3000/get/songname/" + searchText, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
